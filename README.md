@@ -68,7 +68,7 @@ Follow the steps below to set up the environment for running the project:
    python auto_schedule.py --alpha 0.1 --beta 0.6 --gamma 0.3 --g {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_1.edgelist
    ```
 
-## Scheduled Results  
+## ⏰ Scheduled Results  
    - The generated .lp file is saved in the same path as the input data file.  
    - The scheduled results are saved in the directory:  
      `{path_to_workspace}/ENEE759U_Project/output`  
