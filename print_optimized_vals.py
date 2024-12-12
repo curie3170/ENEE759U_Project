@@ -13,11 +13,8 @@ def read_optim(file_path):
         for match in matches:
             column_name, value = match
             results[column_name] = int(value)
-
-    for key, value in results.items():
-        print(f"{key}: {value}")
-
-
+    print(f"M: {results['M']}, L: {results['L']}, A: {results['A']}")
+ 
 # directory_path = "/content/drive/MyDrive/Course/2024\ FALL/ENEE759U/Final_project/output"
 
 # for filename in os.listdir(directory_path):

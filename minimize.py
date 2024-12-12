@@ -6,15 +6,17 @@ def minimize_memory(args, critical_path_length, edges, num_nodes, num_edges):
     lines.append("  M\n")
     # Activated once
     lines.append("Subject To\n")
-
+    lines.append(f"    lat: L = {args.l}\n")
     # Resources
     for i in range(1, args.l+1):
       terms = " + ".join([f"X{j}_{i}" for j in range(1, num_nodes+1)])
-      lines.append(f"    res{i}: {terms} <= {args.a}\n")
+      lines.append(f"    res{i}: {terms} - A <= 0\n")
+    lines.append(f"    res: A = {args.a}\n")
 
     # Schedule
     for i in range(1, num_nodes+1):
       assert critical_path_length <= args.l, "Given latency is smaller than critical path"
+      assert args.l <= num_nodes, "Given latency is longer than number of nodes"
       terms = " + ".join([f"X{i}_{j}" for j in range(1, args.l+1)])
       lines.append(f"    sch{i}: {terms} = 1\n")
 
@@ -57,12 +59,16 @@ def minimize_memory(args, critical_path_length, edges, num_nodes, num_edges):
       for j in range(1, args.l+1):
         lines.append(f"    0 <= X{i}_{j} <= 1 \n")
     lines.append(f"    M >= 1\n")
+    lines.append(f"    A >= 1\n")
+    lines.append(f"    1 <= L <= {num_nodes}\n")
     bounds = list(bounds)
 
     lines.append(f"{''.join(bounds)}")
     # Integer
     lines.append("Integer\n")
     lines.append("    M ")
+    lines.append("    L ")
+    lines.append("    A ")
     for i in range(1, num_nodes+1):
       for j in range(1, args.l+1):
         lines.append(f"X{i}_{j} ")
@@ -86,10 +92,12 @@ def minimize_latency(args, critical_path_length, edges, num_nodes, num_edges):
     lines.append("  L\n")
     # Activated once
     lines.append("Subject To\n")
+    lines.append(f"    mem: M = {args.m}\n")
     # Resources
     for i in range(1, num_nodes+1):
       terms = " + ".join([f"X{j}_{i}" for j in range(1, num_nodes+1)])
-      lines.append(f"    res{i}: {terms} <= {args.a}\n")
+      lines.append(f"    res{i}: {terms} - A <= 0\n")
+    lines.append(f"    res: A = {args.a}\n")
     # Schedule
     for i in range(1, num_nodes+1):
       terms = " + ".join([f"X{i}_{j}" for j in range(1, num_nodes+1)])
@@ -123,7 +131,7 @@ def minimize_latency(args, critical_path_length, edges, num_nodes, num_edges):
             eqns[f"mem_sub{node1}_{k}_{node2}_{l}b"] = f"Y_{node1}_{k}_{node2}_{l} - X{node1}_{k} <= 0 \n"
             eqns[f"mem_sub{node1}_{k}_{node2}_{l}c"] = f"Y_{node1}_{k}_{node2}_{l} - X{node2}_{l} <= 0 \n"
 
-      lines.append(f"    mem{i-1}: {' + '.join(terms)} <= {args.m} \n")
+      lines.append(f"    mem{i-1}: {' + '.join(terms)} - M <= 0 \n")
       terms = []
     for key, value in eqns.items():
       lines.append(f"    {key}: {value}")
@@ -140,13 +148,16 @@ def minimize_latency(args, critical_path_length, edges, num_nodes, num_edges):
     for i in range(1, num_nodes+1):
       for j in range(1, num_nodes+1):
         lines.append(f"    0 <= X{i}_{j} <= 1\n")
+    lines.append(f"    M >= 1\n")
+    lines.append(f"    A >= 1\n")
     lines.append(f"    1 <= L <= {num_nodes}\n")
     bounds = list(bounds)
     lines.append(f"{''.join(bounds)}")
     # Integer
     lines.append("Integer\n")
-    lines.append("    ")
-    lines.append(f"L")
+    lines.append("    M ")
+    lines.append("    L ")
+    lines.append("    A ")
     for i in range(1, num_nodes+1):
       for j in range(1, num_nodes+1):
         lines.append(f"X{i}_{j} ")
