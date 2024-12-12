@@ -83,7 +83,8 @@ def minimize_memory(args, critical_path_length, edges, num_nodes, num_edges):
     parent_dir = Path(os.getcwd()).parent
     if not os.path.exists(out_dir):
       os.makedirs(out_dir)
-    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log.txt")
+    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log_{os.path.splitext(os.path.basename(lp_file))[0]}.txt")
+    os.remove(f"{out_dir}/log_{os.path.splitext(os.path.basename(lp_file))[0]}.txt")
     print(f"Saved a processed file in {lp_file}")
     read_optim(f"{out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out")
     
@@ -172,7 +173,8 @@ def minimize_latency(args, critical_path_length, edges, num_nodes, num_edges):
     parent_dir = Path(os.getcwd()).parent
     if not os.path.exists(out_dir):
       os.makedirs(out_dir)
-    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log.txt")
+    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log_{os.path.splitext(os.path.basename(lp_file))[0]}.txt")
+    os.remove(f"{out_dir}/log_{os.path.splitext(os.path.basename(lp_file))[0]}.txt")
     print(f"Saved a processed file in {lp_file}")
     read_optim(f"{out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out")
     
@@ -261,6 +263,7 @@ def minimize_both(args, critical_path_length, edges, num_nodes, num_edges):
     parent_dir = Path(os.getcwd()).parent
     if not os.path.exists(out_dir):
       os.makedirs(out_dir)
-    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log.txt")
+    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log_{os.path.splitext(os.path.basename(lp_file))[0]}.txt")
+    os.remove(f"{out_dir}/log_{os.path.splitext(os.path.basename(lp_file))[0]}.txt")
     print(f"Saved a processed file in {lp_file}")
     read_optim(f"{out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out")

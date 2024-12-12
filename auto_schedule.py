@@ -15,6 +15,7 @@ def auto_schedule(args):
   )
 
   critical_path_length = nx.dag_longest_path_length(G, weight=1)
+  print(f"critical path: {critical_path_length}")
   edges = list(G.edges(data=True))
   num_nodes = G.number_of_nodes()
   num_edges = G.number_of_edges()
