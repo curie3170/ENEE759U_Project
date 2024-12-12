@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+from print_optimized_vals import read_optim
 def minimize_memory(args, critical_path_length, edges, num_nodes, num_edges):
     lines = ['Minimize\n']
     lines.append("  M\n")
@@ -66,13 +69,18 @@ def minimize_memory(args, critical_path_length, edges, num_nodes, num_edges):
     variables = list(variables)
     lines.append(f"{' '.join(variables)}")
     lines.append(f"\nEnd")
-    save_file = args.g.replace(".edgelist", "")+(f"_Memory_min_l_{args.l}_a_{args.a}.lp")
-    with open(save_file, "w") as file:
+
+    lp_file = args.g.replace(".edgelist", "")+(f"_Memory_min_l_{args.l}_a_{args.a}.lp")
+    with open(lp_file, "w") as file:
       file.writelines(lines)
-    print(f"Processed file saved in {save_file}")
-
-
-
+    out_dir = f"{os.getcwd()}/output"
+    parent_dir = Path(os.getcwd()).parent
+    if not os.path.exists(out_dir):
+      os.makedirs(out_dir)
+    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log.txt")
+    print(f"Saved a processed file in {lp_file}")
+    read_optim(f"{out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out")
+    
 def minimize_latency(args, critical_path_length, edges, num_nodes, num_edges):
     lines = ['Minimize\n']
     lines.append("  L\n")
@@ -84,7 +92,6 @@ def minimize_latency(args, critical_path_length, edges, num_nodes, num_edges):
       lines.append(f"    res{i}: {terms} <= {args.a}\n")
     # Schedule
     for i in range(1, num_nodes+1):
-      assert critical_path_length <= args.l, "Given latency is smaller than critical path"
       terms = " + ".join([f"X{i}_{j}" for j in range(1, num_nodes+1)])
       lines.append(f"    sch{i}: {terms} = 1\n")
     # Dependencies
@@ -147,10 +154,17 @@ def minimize_latency(args, critical_path_length, edges, num_nodes, num_edges):
     lines.append(f"{' '.join(variables)}")
 
     lines.append(f"\nEnd")
-    with open(args.g.replace(".edgelist", "")+(f"_Latency_min_m_{args.m}_a_{args.a}.lp"), "w") as file:
+    lp_file = args.g.replace(".edgelist", "")+(f"_Latency_min_m_{args.m}_a_{args.a}.lp")
+    with open(lp_file, "w") as file:
       file.writelines(lines)
-
-
+    out_dir = f"{os.getcwd()}/output"
+    parent_dir = Path(os.getcwd()).parent
+    if not os.path.exists(out_dir):
+      os.makedirs(out_dir)
+    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log.txt")
+    print(f"Saved a processed file in {lp_file}")
+    read_optim(f"{out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out")
+    
 def minimize_both(args, critical_path_length, edges, num_nodes, num_edges):
     lines = ['Minimize\n']
     lines.append(f"  {args.alpha} M + {args.beta} L + {args.gamma} A\n")
@@ -229,5 +243,13 @@ def minimize_both(args, critical_path_length, edges, num_nodes, num_edges):
     variables = list(variables)
     lines.append(f"{' '.join(variables)}")
 
-    with open(args.g.replace(".edgelist", "")+(f"_Both_min_alpha_{args.alpha}_beta_{args.beta}_gamma_{args.gamma}.lp"), "w") as file:
+    lp_file = args.g.replace(".edgelist", "")+(f"_Both_min_alpha_{args.alpha}_beta_{args.beta}_gamma_{args.gamma}.lp")
+    with open(lp_file, "w") as file:
       file.writelines(lines)
+    out_dir = f"{os.getcwd()}/output"
+    parent_dir = Path(os.getcwd()).parent
+    if not os.path.exists(out_dir):
+      os.makedirs(out_dir)
+    os.system(f"cd {parent_dir}/glpk-5.0/examples;./glpsol --cpxlp {lp_file} -o {out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out > {out_dir}/log.txt")
+    print(f"Saved a processed file in {lp_file}")
+    read_optim(f"{out_dir}/{os.path.splitext(os.path.basename(lp_file))[0]}.out")

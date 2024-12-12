@@ -1,7 +1,7 @@
 import re
 import os
 
-def process_file(file_path):
+def read_optim(file_path):
     results = {}
 
     # 파일 읽기
@@ -18,12 +18,12 @@ def process_file(file_path):
         print(f"{key}: {value}")
 
 
-directory_path = "/content/drive/MyDrive/Course/2024\ FALL/ENEE759U/Final_project/output"
+# directory_path = "/content/drive/MyDrive/Course/2024\ FALL/ENEE759U/Final_project/output"
 
-for filename in os.listdir(directory_path):
-    file_path = os.path.join(directory_path, filename)
+# for filename in os.listdir(directory_path):
+#     file_path = os.path.join(directory_path, filename)
 
-    # 파일인지 확인 (디렉터리 제외)
-    if os.path.isfile(file_path):
-        print(f"Processing file: {filename[-22:-4]}")
-        process_file(file_path)
+#     # 파일인지 확인 (디렉터리 제외)
+#     if os.path.isfile(file_path):
+#         print(f"Processing file: {filename[-22:-4]}")
+#         read_optim(file_path)
