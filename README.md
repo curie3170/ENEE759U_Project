@@ -38,7 +38,7 @@ Follow the steps below to set up the environment for running the project:
   	-	--l: Latency constraint
   	-	--a: Area constraint
   	-	--g: Path to the edgelist dataset
-   Example: 
+   Example:   
    ```
    cd {path_to_workspace}/ENEE759U_Project/
    python auto_schedule.py --l 8 --a 4 --g {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_1.edgelist
@@ -48,7 +48,7 @@ Follow the steps below to set up the environment for running the project:
   	-	--m: Memory constraint
   	-	--a: Area constraint
   	-	--g: Path to the edgelist dataset
-   Example: 
+   Example:  
    ```
    cd {path_to_workspace}/ENEE759U_Project/
    python auto_schedule.py --m 140 --a 4 --g {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_1.edgelist
@@ -62,7 +62,7 @@ Follow the steps below to set up the environment for running the project:
   	-	--beta: Weight of latency
     - --gamma: Weight of area
   	-	--g: Path to the edgelist dataset
-   Example: 
+   Example:  
    ```
    cd {path_to_workspace}/ENEE759U_Project/
    python auto_schedule.py --alpha 0.1 --beta 0.6 --gamma 0.3 --g {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_1.edgelist
@@ -77,7 +77,6 @@ Follow the steps below to set up the environment for running the project:
 
    ```
    > python auto_schedule.py --l 7 --a 4 --g {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_1.edgelist   
-
    critical path: 6
    Saved a processed file in {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_1_Memory_min_l_7_a_4.lp
    M: 106, L: 7, A: 4
