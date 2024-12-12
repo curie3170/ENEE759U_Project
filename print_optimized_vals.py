@@ -4,7 +4,6 @@ import os
 def read_optim(file_path):
     results = {}
 
-    # 파일 읽기
     with open(file_path, "r") as file:
         content = file.read()
 
