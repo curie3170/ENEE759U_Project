@@ -83,3 +83,9 @@ Follow the steps below to set up the environment for running the project:
    M: 106, L: 7, A: 4
    ```
 
+   ```
+   > python auto_schedule.py --alpha 0.1 --beta 0.6 --gamma 0.3 --g {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_1.edgelist
+   critical path: 7
+   Saved a processed file in {path_to_workspace}/ENEE759U/scheduling_benchmarks/rand_DFG_s10_2_Both_min_alpha_0.1_beta_0.6_gamma_0.3.lp
+   M: 105, L: 8, A: 2
+   ```
